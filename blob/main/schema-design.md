@@ -40,11 +40,15 @@
 
 ---
 
-### Relationships
-- One doctor can have many appointments
-- One patient can have many appointments
-- Each appointment is linked to one doctor and one patient
+## Relationships
 
+- Each appointment is linked to ONE doctor and ONE patient
+- A doctor can have MANY appointments
+- A patient can have MANY appointments
+
+### Foreign Keys
+- appointment.doctor_id → doctor.id
+- appointment.patient_id → patient.id
 ---
 
 ## MongoDB Collection Design
