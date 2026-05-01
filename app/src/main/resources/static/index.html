@@ -8,25 +8,13 @@
 
 <h2>Select Your Role</h2>
 
-<button onclick="selectRole('admin')">Admin</button>
-<button onclick="selectRole('doctor')">Doctor</button>
-<button onclick="selectRole('patient')">Patient</button>
+<button id="adminLogin">Admin</button>
+<button id="doctorLogin">Doctor</button>
+<button id="patientLogin">Patient</button>
 
-<script>
-function selectRole(role) {
-    localStorage.setItem("role", role);
 
-    if(role === "admin") {
-        window.location.href = "/admin/adminDashboard";
-    } else if(role === "doctor") {
-        window.location.href = "/doctor/doctorDashboard";
-    } else {
-        window.location.href = "/pages/patientDashboard.html";
-    }
-}
-</script>
 <script src="/js/components/header.js" defer></script>
 <script src="/js/components/footer.js" defer></script>
-<script type="module" src="js/services/index.js" defer></script>
+<script type="module" src="/js/services/index.js"></script>
 </body>
 </html>

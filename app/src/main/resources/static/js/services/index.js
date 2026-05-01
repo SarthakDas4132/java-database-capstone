@@ -1,38 +1,29 @@
-export const API_BASE_URL = "http://localhost:8080";
 import { API_BASE_URL } from "../config/config.js";
 
-// APIs
 const ADMIN_API = API_BASE_URL + "/admin";
 const DOCTOR_API = API_BASE_URL + "/doctor/login";
 
-// Runs after page loads
 window.onload = function () {
+
     const adminBtn = document.getElementById("adminLogin");
     const doctorBtn = document.getElementById("doctorLogin");
+    const patientBtn = document.getElementById("patientLogin");
 
     if (adminBtn) {
-        adminBtn.addEventListener("click", () => {
-            adminLoginHandler();
-        });
+        adminBtn.addEventListener("click", adminLoginHandler);
     }
 
     if (doctorBtn) {
-        doctorBtn.addEventListener("click", () => {
-            doctorLoginHandler();
-        });
+        doctorBtn.addEventListener("click", doctorLoginHandler);
     }
-};
+    
 
-// Save role
-function selectRole(role) {
-    localStorage.setItem("userRole", role);
-
-    if (role === "admin") {
-        window.location.href = "/admin/adminDashboard";
-    } else if (role === "doctor") {
-        window.location.href = "/doctor/doctorDashboard";
-    }
+    if (patientBtn) {
+    patientBtn.addEventListener("click", () => {
+        patientLoginHandler();
+    });
 }
+};
 
 // ================= ADMIN LOGIN =================
 async function adminLoginHandler() {
@@ -51,11 +42,15 @@ async function adminLoginHandler() {
         if (response.ok) {
             const data = await response.json();
 
-            localStorage.setItem("token", data.token || "dummy-token");
-            selectRole("admin");
+            localStorage.setItem("token", data.token);
+
+            // ✅ CORRECT REDIRECT
+            window.location.href = `/adminDashboard/${data.token}`;
+
         } else {
             alert("Invalid credentials!");
         }
+
     } catch (error) {
         alert("Error: " + error);
     }
@@ -66,7 +61,7 @@ async function doctorLoginHandler() {
     const email = prompt("Enter email");
     const password = prompt("Enter password");
 
-    const doctor = { email, password };
+    const doctor = { identifier: email, password };
 
     try {
         const response = await fetch(DOCTOR_API, {
@@ -78,12 +73,29 @@ async function doctorLoginHandler() {
         if (response.ok) {
             const data = await response.json();
 
-            localStorage.setItem("token", data.token || "dummy-token");
-            selectRole("doctor");
+            localStorage.setItem("token", data.token);
+
+            // ✅ CORRECT REDIRECT
+            window.location.href = `/doctorDashboard/${data.token}`;
+
         } else {
             alert("Invalid credentials!");
         }
+
     } catch (error) {
         alert("Error: " + error);
     }
+}
+
+function patientLoginHandler() {
+    const email = prompt("Enter email");
+    const password = prompt("Enter password");
+
+    // dummy token for now
+    const token = "patient-token";
+
+    localStorage.setItem("token", token);
+
+    // redirect to dummy page
+    window.location.href = "/pages/patientDashboard.html";
 }

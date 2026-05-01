@@ -28,7 +28,7 @@ public class AppointmentService {
     private DoctorRepository doctorRepository;
 
     @Autowired
-    private Service service; // central validation service
+    private MainService service; // central validation service
 
     // ================= BOOK =================
     public int bookAppointment(Appointment appointment) {

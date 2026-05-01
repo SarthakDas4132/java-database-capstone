@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Patient Dashboard</title>
-</head>
 <body>
 
 <h2>Patient Dashboard</h2>
 
-<input type="text" placeholder="Search doctors..." />
+<input type="text" id="search" placeholder="Search doctor by name">
+<button onclick="searchDoctor()">Search</button>
 
-<div id="content"></div>
+<div id="result"></div>
+
+<script>
+function searchDoctor() {
+    document.getElementById("result").innerHTML = `
+        <p>Dr John (Cardiologist)</p>
+    `;
+}
+</script>
 
 </body>
 </html>
